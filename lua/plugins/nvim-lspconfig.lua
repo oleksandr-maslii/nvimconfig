@@ -70,8 +70,7 @@ return {
 		local lspconfig = require("lspconfig")
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-		local overseer_profiles = require("om.core.overseer_profiles")
-
+		local overseer_profiles = require("plugin-utils.overseer-profiles")
 
 		lspconfig.lua_ls.setup({
 			capabilities = capabilities,
@@ -94,8 +93,8 @@ return {
 		})
 
 		lspconfig.gopls.setup({
-			on_attach = function (client, bufnr)
-				overseer_profiles.on_lsp_attach(client, bufnr)
+			on_attach = function (client)
+				overseer_profiles.on_lsp_attach(client)
 			end,
 			capabilities = capabilities,
 			root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
