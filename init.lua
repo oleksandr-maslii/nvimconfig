@@ -1,2 +1,5 @@
 require("om.core")
-require("om.lazy")
+require("config.lazy")
+
+vim.o.completeopt = "menu,menuone,noselect"
+

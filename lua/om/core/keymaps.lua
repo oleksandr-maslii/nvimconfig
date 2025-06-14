@@ -25,6 +25,8 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set("n", "<C-c>", ":nohl<CR>")
 
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<C-e>", vim.diagnostic.open_float)
+vim.keymap.set("n", "<C-k>", vim.lsp.buf.hover)
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "x", '"_x', opts)
 
@@ -34,7 +36,7 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = 'Highlight when yanking text',
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function() 
+	callback = function()
 		vim.highlight.on_yank()
 	end
 })
@@ -59,3 +61,4 @@ vim.keymap.set("n", "<leader>fp", function()
 	vim.fn.setreg("+", filePath)
 	print("File path copied to clipboard: " .. filePath)
 end)
+

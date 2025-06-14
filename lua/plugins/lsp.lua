@@ -1,36 +1,29 @@
 return {
 	{
 		"mason-org/mason.nvim",
-		opts = {}
-	},
-	{
-		"mason-org/mason-lspconfig.nvim",
+		lazy = false,
 		dependencies = {
+			"mason-org/mason-lspconfig.nvim",
 			"neovim/nvim-lspconfig",
 			"hrsh7th/cmp-nvim-lsp",
+			"neovim/nvim-lspconfig",
 		},
-		opts = {
-			ensure_installed = { "gopls" }
-		},
-	},
-	{
-		"neovim/nvim-lspconfig",
-		config  = function()
-			local lspconfig = require("lspconfig")
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		config = function()
+			local mason = require("mason")
+			local mason_lspconfig = require("mason-lspconfig")
 
-			lspconfig.gopls.setup({
-				capabilities = capabilities,
-				settings = {
-				  gopls = {
-					analyses = {
-					  unusedparams = true,
-					  shadow = true,
-					},
-					staticcheck = true,
-				  },
-				},
+			mason.setup({
+				registries = {
+					"github:mason-org/mason-registry",
+					"github:Crashdummyy/mason-registry",
+				}
+			})
+
+			mason_lspconfig.setup({
+				automatic_enable = true,
+				ensure_installed = { "gopls", "lua_ls" },
+				automatic_installation = true,
 			})
 		end
-	}
+	},
 }
