@@ -22,7 +22,6 @@ local function load_golang_profile(projectRoot)
 	return profile
 end
 
-
 function M.on_lsp_attach(client)
 	local workspaces = vim.lsp.buf.list_workspace_folders()
 	if not workspaces then return end
