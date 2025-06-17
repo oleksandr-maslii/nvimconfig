@@ -8,6 +8,7 @@ return {
 				ensure_installed = {
 					"sql",
 					"css",
+					"scss",
 					"go",
 					"c_sharp",
 					"html",

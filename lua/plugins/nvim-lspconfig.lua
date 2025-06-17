@@ -1,15 +1,14 @@
 return {
 	"neovim/nvim-lspconfig",
-	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		{ "folke/neodev.nvim", opts = {} }
+		{ "folke/neodev.nvim",                   opts = {} }
 	},
-	config = function ()
+	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-			callback = function (ev)
+			callback = function(ev)
 				local opts = { buffer = ev.buf, silent = true }
 
 				opts.desc = "Show LSP references"
@@ -28,7 +27,7 @@ return {
 				vim.keymap.set("n", "<leader>gti", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 
 				opts.desc = "See available code actions"
-				vim.keymap.set({ "n", "v" }, "<leader>vca", function () vim.lsp.buf.code_action() end, opts)
+				vim.keymap.set({ "n", "v" }, "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
 
 				opts.desc = "Smart rename"
 				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
@@ -45,18 +44,18 @@ return {
 				opts.desc = "Restart LSP"
 				vim.keymap.set("n", "<leader>lrs", ":LspRestart<CR>", opts)
 
-				vim.keymap.set("i", "<C-h>", function ()
+				vim.keymap.set("i", "<C-h>", function()
 					vim.lsp.buf.signature_help()
 				end, opts)
 			end
 		})
 
 		local signs = {
-            [vim.diagnostic.severity.ERROR] = " ",
-            [vim.diagnostic.severity.WARN]  = " ",
-            [vim.diagnostic.severity.HINT]  = "󰠠 ",
-            [vim.diagnostic.severity.INFO]  = " ",
-        }
+			[vim.diagnostic.severity.ERROR] = " ",
+			[vim.diagnostic.severity.WARN]  = " ",
+			[vim.diagnostic.severity.HINT]  = "󰠠 ",
+			[vim.diagnostic.severity.INFO]  = " ",
+		}
 
 		vim.diagnostic.config({
 			signs = {
@@ -72,7 +71,7 @@ return {
 
 		local overseer_profiles = require("plugin-utils.overseer-profiles")
 
-		lspconfig.lua_ls.setup({
+		vim.lsp.config("lua_ls", {
 			capabilities = capabilities,
 			settings = {
 				Lua = {
@@ -91,9 +90,60 @@ return {
 				}
 			}
 		})
+		vim.lsp.enable("lua_ls")
 
-		lspconfig.gopls.setup({
-			on_attach = function (client)
+		vim.lsp.config("html", {
+			capabilities = capabilities,
+			filetypes = { "html", "vue" }
+		})
+		vim.lsp.enable("html")
+
+		vim.lsp.config("cssls", {
+			capabilities = capabilities,
+			filetypes = { "css", "scss", "less", "vue" },
+		})
+		vim.lsp.enable("cssls")
+
+		local vue_ls_path = vim.fn.stdpath("data") .. "/mason/packages/" .. "vue-language-server/" .. "node_modules"
+		local typescript_path = vue_ls_path .. "/typescript/lib/"
+
+		vim.lsp.config("vue_ls", {
+			capabilities = capabilities,
+			init_options = {
+				typescript = { tsdk = typescript_path }
+			}
+		})
+		vim.lsp.enable("vue_ls")
+
+		local typescript_plugin_path = vue_ls_path .. "/@vue/language-server"
+
+		vim.lsp.config("ts_ls", {
+			capabilities = capabilities,
+			filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact", "javascript.jsx", "vue" },
+			init_options = {
+				plugins = {
+					{
+						name = "@vue/typescript-plugin",
+						location = typescript_plugin_path,
+						languages = { "vue" },
+					}
+				}
+			},
+			settings = {
+				typescript = {
+					inlayHints = {
+						includeInlayParameterNameHints = "all",
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+					},
+				},
+			},
+		})
+		vim.lsp.enable("ts_ls")
+
+		vim.lsp.config("gopls", {
+			on_attach = function(client)
 				overseer_profiles.on_lsp_attach(client)
 			end,
 			capabilities = capabilities,
@@ -108,6 +158,7 @@ return {
 				},
 			},
 		})
+		vim.lsp.enable("gopls")
 
 		vim.lsp.config("roslyn", {
 			on_attach = function(client)
