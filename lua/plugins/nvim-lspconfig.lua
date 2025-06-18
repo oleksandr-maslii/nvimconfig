@@ -142,11 +142,12 @@ return {
 		})
 		vim.lsp.enable("ts_ls")
 
-		vim.lsp.config("gopls", {
+		lspconfig.gopls.setup({
+			capabilities = capabilities,
+			filetypes = { "go", "gomod", "gowork", "gotmpl" },
 			on_attach = function(client)
 				overseer_profiles.on_lsp_attach(client)
 			end,
-			capabilities = capabilities,
 			root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
 			settings = {
 				gopls = {
@@ -158,7 +159,7 @@ return {
 				},
 			},
 		})
-		vim.lsp.enable("gopls")
+
 
 		vim.lsp.config("roslyn", {
 			on_attach = function(client)

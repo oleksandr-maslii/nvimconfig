@@ -9,7 +9,7 @@ return {
 					"github:mason-org/mason-registry",
 					"github:Crashdummyy/mason-registry",
 				},
-				ensure_installed = { "gopls", "lua_ls", "html", "cssls", "vue_ls" },
+				ensure_installed = { "gopls", "lua_ls", "html", "cssls", "vue-language-server", "typescript-language-server" },
 			})
 		end
 	},
