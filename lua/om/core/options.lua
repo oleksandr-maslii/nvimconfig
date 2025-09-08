@@ -48,7 +48,6 @@ vim.opt.hlsearch = true
 vim.opt.mouse = "a"
 vim.g.editorconfig = true
 
-
 vim.api.nvim_create_user_command("LspWorkspaces", function()
   local folders = vim.lsp.buf.list_workspace_folders()
   if folders and #folders > 0 then

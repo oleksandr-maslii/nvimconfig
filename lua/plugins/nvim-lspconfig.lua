@@ -67,7 +67,12 @@ return {
 		})
 
 		local lspconfig = require("lspconfig")
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+		local capabilities = vim.tbl_deep_extend("force",
+          vim.lsp.protocol.make_client_capabilities(),
+          require('cmp_nvim_lsp').default_capabilities()
+        )
+        capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 
 		local overseer_profiles = require("plugin-utils.overseer-profiles")
 
@@ -155,16 +160,16 @@ return {
 						unusedparams = true,
 						shadow = true,
 					},
-					staticcheck = true,
+                    staticcheck = true,
 				},
 			},
 		})
 
 
 		vim.lsp.config("roslyn", {
-			on_attach = function(client)
-				overseer_profiles.on_lsp_attach(client)
-			end,
+			-- on_attach = function(client)
+			-- 	overseer_profiles.on_lsp_attach(client)
+			-- end,
 			settings = {
 				["csharp|code_lens"] = {
 					dotnet_enable_references_code_lens = true,
@@ -180,5 +185,8 @@ return {
 				}
 			}
 		})
+
+        vim.lsp.config("postgrestools", {})
+        vim.lsp.enable("postgrestools")
 	end
 }
