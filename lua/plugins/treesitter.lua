@@ -18,6 +18,7 @@ return {
 					"markdown",
 					"typescript",
 					"dockerfile",
+                    "rust"
 				},
 				auto_install = true,
 				highlight = {
