@@ -66,8 +66,6 @@ return {
 			update_in_insert = false
 		})
 
-		local lspconfig = require("lspconfig")
-
 		local capabilities = vim.tbl_deep_extend("force",
           vim.lsp.protocol.make_client_capabilities(),
           require('cmp_nvim_lsp').default_capabilities()
@@ -147,13 +145,13 @@ return {
 		})
 		vim.lsp.enable("ts_ls")
 
-		lspconfig.gopls.setup({
+        vim.lsp.config("gopls", {
 			capabilities = capabilities,
 			filetypes = { "go", "gomod", "gowork", "gotmpl" },
 			on_attach = function(client)
 				overseer_profiles.on_lsp_attach(client)
 			end,
-			root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+            root_markers = { "go.work", "go.mod", ".git" },
 			settings = {
 				gopls = {
 					analyses = {
@@ -163,8 +161,8 @@ return {
                     staticcheck = true,
 				},
 			},
-		})
-
+        })
+        vim.lsp.enable("gopls")
 
 		vim.lsp.config("roslyn", {
 			-- on_attach = function(client)
