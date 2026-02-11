@@ -16,7 +16,8 @@ return {
                     "cssls",
                     "vue-language-server",
                     "typescript-language-server",
-                    "rust-analyzer"
+                    "rust-analyzer",
+                    "clangd",
                 },
 			})
 		end
