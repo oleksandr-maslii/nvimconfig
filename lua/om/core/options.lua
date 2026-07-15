@@ -3,7 +3,7 @@ vim.cmd("let g:netrw_banner = 0")
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "10"
 
 vim.opt.cursorline = true      -- Highlight the current line
 
@@ -40,7 +40,7 @@ vim.opt.splitbelow = true
 
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "250"
+vim.opt.colorcolumn = "100"
 
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.hlsearch = true

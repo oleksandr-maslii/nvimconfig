@@ -34,4 +34,4 @@ require("lazy").setup({
   checker = { enabled = true },
 })
 
-vim.cmd[[colorscheme catppuccin-mocha]]
+vim.cmd.colorscheme "catppuccin-mocha"

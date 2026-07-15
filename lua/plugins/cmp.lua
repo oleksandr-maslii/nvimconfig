@@ -40,8 +40,8 @@ return {
 					require("luasnip").lsp_expand(args.body)
 				end
 			},
+-- { name = "copilot" },
 			sources = cmp.config.sources({
-				{ name = "copilot" },
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
 				{ name = "buffer" },
